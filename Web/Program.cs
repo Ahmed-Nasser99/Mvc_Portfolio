@@ -1,4 +1,6 @@
+using Core.Interfaces;
 using Infrastructure;
+using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 namespace Web
@@ -13,10 +15,12 @@ namespace Web
   
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefacultConnection"));
             });
+      
 
             var app = builder.Build();
 
